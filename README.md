@@ -111,6 +111,12 @@ The system proves its value through a distinct "Training vs. Inference" evolutio
 ### 2. Configuration
 Ensure your PostgreSQL database is running and the connection requirement details is set in your `.env` file.
 
+    PG_USER=
+    PG_PASSWORD=
+    PG_HOST=
+    PG_PORT=
+    PG_DB=
+
 ### 3. Seed Data
 Load the sample dataset (invoices, POs, and corrections).
 
