@@ -1,6 +1,72 @@
-**Invoice Memory Engine**
+# 🧠 Invoice Memory Engine
 
+> **A self-learning automation layer that gets smarter with every invoice.**
 
-**Overview**
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 
-This project implements a memory layer on top of an invoice extraction pipeline using a four-stage workflow: recall → apply → decide → learn. It consumes extracted invoice, PO, delivery note, and human correction data, then produces a normalized invoice and decision metadata to improve automation over time.
+---
+
+## 📖 Overview
+
+The **Invoice Memory Engine** wraps standard invoice extraction pipelines with a cognitive layer. Instead of treating every document as a blank slate, this engine implements a **four-stage memory cycle** to persist human corrections and vendor-specific patterns.
+
+The system moves beyond simple rules by implementing a dynamic feedback loop:
+`Recall` ➔ `Apply` ➔ `Decide` ➔ `Learn`
+
+---
+
+## 🏗 Core Data Model
+
+The architecture relies on a robust relational model to bridge raw data with learned intelligence.
+
+| Component | Description |
+| :--- | :--- |
+| **📄 Invoices** | Extracted headers, line items, vendor details, and raw OCR text. |
+| **📦 Purchase Orders** | PO numbers, dates, and line items for validation and matching. |
+| **🚚 Delivery Notes** | Supporting documents to triangulate SKUs and quantities. |
+| **✍️ Human Corrections** | The "Ground Truth"—actual fixes applied by humans. |
+| **🧠 Vendor Memories** | High-level rules (VAT behavior, payment terms) linked to specific vendors. |
+| **🎯 Correction Memories** | Granular field patterns (e.g., *"Map 'Leistungsdatum' to ServiceDate"*). |
+| **📊 Resolution Memories** | Reliability tracking (approvals vs. rejections) to adjust confidence. |
+| **📜 Audit Trail** | A complete, append-only log of the engine's cognitive process. |
+
+---
+
+## 🔄 The Memory Workflow
+
+For every invoice, the engine executes a deterministic cognitive cycle:
+
+### 1. 🧠 Recall
+*Fetch context.*
+The system queries the `vendor_memories` and `correction_memories` tables, retrieving rules relevant to the specific Vendor ID and invoice context (raw text keywords, related POs).
+
+### 2. ⚙️ Apply
+*Execute heuristics.*
+Memories are applied to the raw data to generate a **Normalized Invoice**:
+*   **Field Mapping:** Translates raw labels (e.g., *"Leistungsdatum"*) into standard schema fields.
+*   **Financial Math:** Reconstructs VAT/Net/Gross amounts and infers currency symbols.
+*   **Smart Matching:** Links Invoices to POs using fuzzy SKU matching and date proximity.
+*   **Term Extraction:** Identifies *"Skonto"* (discounts) and standardizes freight line items.
+*   **Safety Check:** Instantly flags potential duplicates.
+
+### 3. ⚖️ Decide
+*Evaluate confidence.*
+The engine calculates a `confidenceScore` and determines if human intervention is needed (`requiresHumanReview`).
+*   **Baseline:** Starts with OCR extractor confidence.
+*   **Boost:** +Points for every successfully applied memory.
+*   **Verdict:** If confidence is high and no conflicts exist ➔ **Auto-Approve**.
+
+### 4. 🎓 Learn
+*Close the loop.*
+Post-processing, the engine compares its prediction against the **Human Correction**.
+*   ✅ **Success:** Reinforce the memory (Increment confidence).
+*   ❌ **Failure:** Correct the memory (Decay confidence or generate new rule).
+
+---
+
+## 🧠 Decision Logic
+
+The "Brain" of the operation balances automation with safety using a weighted scoring system:
+
