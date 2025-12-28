@@ -104,3 +104,19 @@ The system proves its value through a distinct "Training vs. Inference" evolutio
 
 npm install
 
+
+### 2. Configuration
+Ensure your PostgreSQL database is running and the connection requirement details is set in your `.env` file.
+
+### 3. Seed Data
+Load the sample dataset (invoices, POs, and corrections).
+
+npm run load_data
+
+
+### 4. Run
+Watch the engine learn and improve in real-time.
+
+npx ts-node src/demo.ts
+
+
