@@ -62,7 +62,7 @@ The engine calculates a `confidenceScore` and determines if human intervention i
 *Close the loop.*
 Post-processing, the engine compares its prediction against the **Human Correction**.
 *   ✅ **Success:** Reinforce the memory (Increment confidence).
-*   ❌ **Failure:** Correct the memory (Decay confidence or generate new rule).
+*   ❌ **Failure:** Correct the memory.
 
 ---
 
