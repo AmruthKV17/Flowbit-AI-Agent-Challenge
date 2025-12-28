@@ -71,10 +71,13 @@ Post-processing, the engine compares its prediction against the **Human Correcti
 The "Brain" of the operation balances automation with safety using a weighted scoring system:
 
 Final Confidence = Base Confidence + Memory Boosts
+
                  = invoice.confidence + (appliedRules × 0.05) + (highConfMemories × 0.03)
                  
 Decision:
+
   IF confidence ≥ 0.9 → AUTO-APPROVE (no human review)
+  
   IF confidence < 0.9 → FLAG FOR REVIEW (ask human)
   
 ---
