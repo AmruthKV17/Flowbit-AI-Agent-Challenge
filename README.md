@@ -76,5 +76,31 @@ Final Confidence = Base Confidence + Memory Boosts
 Decision:
   IF confidence ≥ 0.9 → AUTO-APPROVE (no human review)
   IF confidence < 0.9 → FLAG FOR REVIEW (ask human)
+---
 
+## 🚀 Demonstrated Behavior
+
+The system proves its value through a distinct "Training vs. Inference" evolution.
+
+### Phase 1: Training (Seeding) 🌱
+*   **Input:** Initial batch of raw invoices.
+*   **Action:** Human operators provide corrections (e.g., mapping dates, fixing VAT).
+*   **Result:** The engine "seeds" its memory banks, learning that *Supplier GmbH* puts dates in the footer and *Parts AG* always includes VAT.
+
+### Phase 2: Automation (Harvesting) ⚡
+*   **Input:** New invoices from the same vendors.
+*   **Action:** The engine runs **Recall**.
+*   **Result:**
+    *   Service dates are auto-filled.
+    *   POs are automatically linked.
+    *   Confidence scores skyrocket.
+    *   **Human Review is skipped.**
+
+---
+
+## ⚡ Quick Start
+
+### 1. Installation
+
+npm install
 
