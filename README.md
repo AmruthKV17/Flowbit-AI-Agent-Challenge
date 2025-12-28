@@ -71,8 +71,7 @@ Post-processing, the engine compares its prediction against the **Human Correcti
 The "Brain" of the operation balances automation with safety using a weighted scoring system:
 
 Final Confidence = Base Confidence + Memory Boosts
-
-                 = invoice.confidence + (appliedRules × 0.05) + (highConfMemories × 0.03)
+                  = invoice.confidence + (appliedRules × 0.05) + (highConfMemories × 0.03)
                  
 Decision:
 
@@ -106,7 +105,7 @@ The system proves its value through a distinct "Training vs. Inference" evolutio
 
 ### 1. Installation
 
-npm install
+    npm install
 
 
 ### 2. Configuration
@@ -115,12 +114,12 @@ Ensure your PostgreSQL database is running and the connection requirement detail
 ### 3. Seed Data
 Load the sample dataset (invoices, POs, and corrections).
 
-npm run load_data
+    npm run load_data
 
 
 ### 4. Run
 Watch the engine learn and improve in real-time.
 
-npx ts-node src/demo.ts
+    npx ts-node src/demo.ts
 
 
